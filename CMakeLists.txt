@@ -13,7 +13,7 @@ option(ATOM_INCLUDE_LOGGER "Enable the atom-logger module" ON)
 option(ATOM_INCLUDE_MATH "Enable the atom-math module" ON)
 
 add_subdirectory(external)
-add_subdirectory(atom/core)
+add_subdirectory(atom/common)
 
 if(ATOM_INCLUDE_LOGGER)
   add_subdirectory(atom/logger)

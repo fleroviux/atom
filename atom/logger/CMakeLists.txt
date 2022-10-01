@@ -22,7 +22,7 @@ set(HEADERS_PUBLIC
 )
 
 add_library(atom-logger ${SOURCES} ${HEADERS} ${HEADERS_PUBLIC})
-target_link_libraries(atom-logger PRIVATE atom-core)
+target_link_libraries(atom-logger PRIVATE atom-common)
 target_link_libraries(atom-logger PUBLIC fmt)
 target_include_directories(atom-logger PRIVATE src)
 target_include_directories(atom-logger PUBLIC include)

@@ -14,3 +14,4 @@ set(HEADERS_PUBLIC
 
 add_library(atom-math INTERFACE ${HEADERS_PUBLIC})
 target_include_directories(atom-math INTERFACE include)
+target_link_libraries(atom-math INTERFACE atom-common)
