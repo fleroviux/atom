@@ -1,5 +1,7 @@
 # atom
 
+![license](https://img.shields.io/github/license/fleroviux/atom)
+
 atom is a collection of C++ libraries that I have written for use in my personal projects.
 
 ## Motivation
