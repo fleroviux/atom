@@ -16,6 +16,7 @@ atom is an attempt to maintain my core libraries in a single place and with a co
 - Atom Common:
   - Sized integer types (u8, s8, u16, s16, ...)
   - Panic macro with support for a custom panic handler
+  - Meta-programming utilities
 
 - Atom Logger:
   - Logger with multi-sink support

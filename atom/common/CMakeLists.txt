@@ -11,7 +11,9 @@ set(HEADERS
 
 set(HEADERS_PUBLIC
   include/atom/integer.hpp
+  include/atom/meta.hpp
   include/atom/panic.hpp
+  include/atom/punning.hpp
 )
 
 add_library(atom-common ${SOURCES} ${HEADERS} ${HEADERS_PUBLIC})
