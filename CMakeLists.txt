@@ -10,10 +10,15 @@ option(ATOM_USE_EXTERNAL_FMT "Use externally provided {fmt} library." OFF)
 
 # Which atom modules are included from this CMakeLists:
 option(ATOM_INCLUDE_LOGGER "Enable the atom-logger module" ON)
+option(ATOM_INCLUDE_MATH "Enable the atom-math module" ON)
 
 add_subdirectory(external)
 add_subdirectory(atom/core)
 
 if(ATOM_INCLUDE_LOGGER)
   add_subdirectory(atom/logger)
+endif()
+
+if(ATOM_INCLUDE_MATH)
+  add_subdirectory(atom/math)
 endif()
