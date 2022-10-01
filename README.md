@@ -30,3 +30,7 @@ atom is an attempt to maintain my core libraries in a single place and with a co
   - Box3 (axis-aligned bounding box)
   - Frustum
   - Plane
+
+## License
+
+atom is licensed under 0BSD license. See [LICENSE](LICENSE) file for details.
