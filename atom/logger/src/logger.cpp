@@ -10,8 +10,8 @@ namespace atom {
     return logger;
   }
 
-  Logger& GetNamedLogger(std::string_view name) {
-    static std::unordered_map<std::string_view, Logger> registry;
+  Logger& GetNamedLogger(std::string const& name) {
+    static std::unordered_map<std::string, Logger> registry;
 
     if (!registry.contains(name)) {
       auto sink_collection = std::make_shared<Logger::SinkCollection>();

@@ -215,7 +215,7 @@ namespace atom {
         return {hour, minute, second};
       }
 
-      std::optional<std::string_view> name;
+      std::optional<std::string> name;
       std::shared_ptr<SinkCollection> sink_collection;
   };
 
@@ -223,7 +223,7 @@ namespace atom {
   Logger& GetLogger();
 
   /// @returns a named logger. A logger is created if the name is not known yet.
-  Logger& GetNamedLogger(std::string_view name);
+  Logger& GetNamedLogger(std::string const& name);
 
 } // namespace atom
 
