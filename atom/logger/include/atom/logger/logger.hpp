@@ -224,9 +224,9 @@ namespace atom {
 
 #define ATOM_LOG(level, format, ...) atom::GetLogger().Log<level>(format, ## __VA_ARGS__);
 
-#define ATOM_TRACE(format, ...) ATOM_LOG(Trace, format, ## __VA_ARGS__)
-#define ATOM_DEBUG(format, ...) ATOM_LOG(Debug, format, ## __VA_ARGS__)
-#define ATOM_INFO(format, ...)  ATOM_LOG(Info,  format, ## __VA_ARGS__)
-#define ATOM_WARN(format, ...)  ATOM_LOG(Warn,  format, ## __VA_ARGS__)
-#define ATOM_ERROR(format, ...) ATOM_LOG(Error, format, ## __VA_ARGS__)
-#define ATOM_FATAL(format, ...) ATOM_LOG(Fatal, format, ## __VA_ARGS__)
+#define ATOM_TRACE(format, ...) ATOM_LOG(atom::Trace, format, ## __VA_ARGS__)
+#define ATOM_DEBUG(format, ...) ATOM_LOG(atom::Debug, format, ## __VA_ARGS__)
+#define ATOM_INFO(format, ...)  ATOM_LOG(atom::Info,  format, ## __VA_ARGS__)
+#define ATOM_WARN(format, ...)  ATOM_LOG(atom::Warn,  format, ## __VA_ARGS__)
+#define ATOM_ERROR(format, ...) ATOM_LOG(atom::Error, format, ## __VA_ARGS__)
+#define ATOM_FATAL(format, ...) ATOM_LOG(atom::Fatal, format, ## __VA_ARGS__)
