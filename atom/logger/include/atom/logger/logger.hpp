@@ -114,7 +114,7 @@ namespace atom {
       };
 
       /// A collection of logger sinks
-      class SinkCollection {
+      class SinkCollection : public SinkBase {
         public:
           /// Add a sink to the collection
           void Install(std::shared_ptr<SinkBase> const& sink) {
@@ -129,6 +129,13 @@ namespace atom {
           /// @returns a span referring to all registered sinks
           [[nodiscard]] std::span<const std::shared_ptr<SinkBase>> AsSpan() {
             return sinks;
+          }
+
+        protected:
+          void AppendImpl(Message const& message) override {
+            for(auto& sink : sinks) {
+              sink->Append(message);
+            }
           }
 
         private:
@@ -194,9 +201,7 @@ namespace atom {
 #endif
 
       void SendMessage(Message const& message) const {
-        for(auto& sink : sink_collection->AsSpan()) {
-          sink->Append(message);
-        }
+        sink_collection->Append(message);
       }
 
       static Message::Time GetCurrentTime() {

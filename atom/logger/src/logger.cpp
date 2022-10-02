@@ -14,7 +14,9 @@ namespace atom {
     static std::unordered_map<std::string_view, Logger> registry;
 
     if (!registry.contains(name)) {
-      registry[name] = Logger{GetLogger().GetSinkCollection(), name};
+      auto sink_collection = std::make_shared<Logger::SinkCollection>();
+      sink_collection->Install(GetLogger().GetSinkCollection());
+      registry[name] = Logger{sink_collection, name};
     }
 
     return registry[name];
