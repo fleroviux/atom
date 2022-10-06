@@ -2,15 +2,15 @@
 #pragma once
 
 #include <atom/integer.hpp>
-#include <climits>
 #include <memory>
 #include <type_traits>
+#include <limits>
 
 namespace atom::bit {
 
   template<typename T>
   constexpr auto number_of_bits() -> uint {
-    return CHAR_BIT * sizeof(T);
+    return 8 * sizeof(T);
   }
 
   template<typename T, typename U = T>
@@ -66,4 +66,55 @@ namespace atom::bit {
     return (value & detail::build_pattern_mask<T>(pattern)) == detail::build_pattern_value<T>(pattern);
   }
 
+  template<typename T>
+  constexpr T ones = (T)std::numeric_limits<std::make_unsigned_t<T>>::max();
+
 } // namespace atom::bit
+
+namespace atom {
+
+  template<uint bit, uint length, typename T>
+  struct Bits {
+    struct Bit {
+      constexpr Bit(uint index, T& data) : index{index}, data{&data} {}
+
+      constexpr operator unsigned() const {
+        return (*data >> index) & 1u;
+      }
+
+      constexpr Bit& operator=(unsigned value) {
+        *data = (*data & ~(1u << index)) | (value > 0 ? (1u << index) : 0);
+        return *this;
+      }
+
+      uint index;
+      T* data;
+    };
+
+    constexpr Bits() = default;
+
+    constexpr Bits(Bits const&) = delete;
+
+    constexpr Bits& operator=(Bits const&) = delete;
+
+    constexpr operator unsigned() const {
+      return (data & mask) >> bit;
+    }
+
+    template<typename U>
+    constexpr Bits& operator=(U value) {
+      data = (data & ~mask) | (((T)value << bit) & mask);
+      return *this;
+    }
+
+    constexpr Bit operator[](uint index) {
+      return {bit + index, data};
+    }
+
+    private:
+      static constexpr T mask = bit::ones<T> >> (bit::number_of_bits<T>() - length) << bit;
+
+      T data;
+  };
+
+} // namespace atom
