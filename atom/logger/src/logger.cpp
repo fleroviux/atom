@@ -4,18 +4,18 @@
 
 namespace atom {
 
-  Logger& GetLogger() {
+  Logger& get_logger() {
     static Logger logger{"atom"};
 
     return logger;
   }
 
-  Logger& GetNamedLogger(std::string const& name) {
+  Logger& get_named_logger(std::string const& name) {
     static std::unordered_map<std::string, Logger> registry;
 
     if (!registry.contains(name)) {
       auto sink_collection = std::make_shared<Logger::SinkCollection>();
-      sink_collection->Install(GetLogger().GetSinkCollection());
+      sink_collection->Install(get_logger().GetSinkCollection());
       registry[name] = Logger{sink_collection, name};
     }
 

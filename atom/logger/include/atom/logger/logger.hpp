@@ -220,14 +220,14 @@ namespace atom {
   };
 
   /// @returns the default logger (as used by ATOM_INFO, ATOM_WARN macros etc.)
-  Logger& GetLogger();
+  Logger& get_logger();
 
   /// @returns a named logger. A logger is created if the name is not known yet.
-  Logger& GetNamedLogger(std::string const& name);
+  Logger& get_named_logger(std::string const& name);
 
 } // namespace atom
 
-#define ATOM_LOG(level, format, ...) atom::GetLogger().Log<level>(format, ## __VA_ARGS__);
+#define ATOM_LOG(level, format, ...) atom::get_logger().Log<level>(format, ## __VA_ARGS__);
 
 #define ATOM_TRACE(format, ...) ATOM_LOG(atom::Trace, format, ## __VA_ARGS__)
 #define ATOM_DEBUG(format, ...) ATOM_LOG(atom::Debug, format, ## __VA_ARGS__)
