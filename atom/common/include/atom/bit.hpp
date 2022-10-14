@@ -2,6 +2,7 @@
 #pragma once
 
 #include <atom/integer.hpp>
+#include <concepts>
 #include <memory>
 #include <type_traits>
 #include <limits>
@@ -74,6 +75,7 @@ namespace atom::bit {
 namespace atom {
 
   template<uint bit, uint length, typename T>
+  requires std::unsigned_integral<T>
   struct Bits {
     struct Bit {
       constexpr Bit(uint index, T& data) : index{index}, data{&data} {}
@@ -97,6 +99,11 @@ namespace atom {
 
     constexpr Bits& operator=(Bits const&) = delete;
 
+    template<typename U>
+    constexpr explicit operator U() const {
+      return (U)(data & mask) >> bit;
+    }
+
     constexpr operator unsigned() const {
       return (data & mask) >> bit;
     }
@@ -109,6 +116,11 @@ namespace atom {
 
     constexpr Bit operator[](uint index) {
       return {bit + index, data};
+    }
+
+    template<typename U>
+    constexpr bool operator==(U const& rhs) const {
+      return (U)this == rhs;
     }
 
     private:
