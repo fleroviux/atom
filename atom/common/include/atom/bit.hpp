@@ -101,7 +101,7 @@ namespace atom {
 
     template<typename U>
     constexpr explicit operator U() const {
-      return (U)(data & mask) >> bit;
+      return (U)((data & mask) >> bit);
     }
 
     constexpr operator unsigned() const {
