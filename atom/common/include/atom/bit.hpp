@@ -93,12 +93,6 @@ namespace atom {
       T* data;
     };
 
-    constexpr Bits() = default;
-
-    constexpr Bits(Bits const&) = delete;
-
-    constexpr Bits& operator=(Bits const&) = delete;
-
     template<typename U>
     constexpr explicit operator U() const {
       return (U)((data & mask) >> bit);
