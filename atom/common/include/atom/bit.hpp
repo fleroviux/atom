@@ -114,7 +114,7 @@ namespace atom {
 
     template<typename U>
     constexpr bool operator==(U const& rhs) const {
-      return (U)this == rhs;
+      return (this->operator U()) == rhs;
     }
 
     private:
