@@ -27,3 +27,5 @@ namespace atom {
 } // namespace atom
 
 #define ATOM_PANIC(format, ...) atom::detail::panic(__FILE__, __LINE__, format, ## __VA_ARGS__);
+
+#define ATOM_UNREACHABLE() ATOM_PANIC("Reached supposedly unreachable code")
