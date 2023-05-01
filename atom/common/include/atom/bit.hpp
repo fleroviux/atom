@@ -85,7 +85,7 @@ namespace atom {
       }
 
       constexpr Bit& operator=(unsigned value) {
-        *data = (*data & ~(1u << index)) | (value > 0 ? (1u << index) : 0);
+        *data = (*data & ~((T)1 << index)) | (value > 0 ? ((T)1 << index) : 0);
         return *this;
       }
 
@@ -110,6 +110,10 @@ namespace atom {
 
     constexpr Bit operator[](uint index) {
       return {bit + index, data};
+    }
+
+    constexpr bool operator[](uint index) const {
+      return data & ((T)1 << (bit + index));
     }
 
     template<typename U>
