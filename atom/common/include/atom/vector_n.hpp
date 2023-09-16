@@ -3,6 +3,7 @@
 
 #include <atom/panic.hpp>
 #include <cstddef>
+#include <span>
 #include <type_traits>
 #include <utility>
 #include <initializer_list>
@@ -186,6 +187,10 @@ namespace atom {
 
       constexpr const_iterator cend() const {
         return (const_iterator)&m_data[m_size];
+      }
+
+      constexpr operator std::span<T>() {
+        return std::span<T>{Data(), Size()};
       }
 
     private:
