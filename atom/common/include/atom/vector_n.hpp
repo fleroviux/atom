@@ -193,6 +193,10 @@ namespace atom {
         return std::span<T>{Data(), Size()};
       }
 
+      [[nodiscard]] constexpr operator std::span<const T>() const {
+        return std::span<const T>{Data(), Size()};
+      }
+
     private:
 
       T m_data[capacity];
