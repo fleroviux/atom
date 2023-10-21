@@ -181,6 +181,14 @@ namespace atom {
         return (iterator)&m_data[m_size];
       }
 
+      constexpr const_iterator begin() const {
+        return (const_iterator)&m_data[0];
+      }
+
+      constexpr const_iterator end() const {
+        return (const_iterator)&m_data[m_size];
+      }
+
       constexpr const_iterator cbegin() const {
         return (const_iterator)&m_data[0];
       }
