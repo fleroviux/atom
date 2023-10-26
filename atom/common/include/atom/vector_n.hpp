@@ -85,6 +85,12 @@ namespace atom {
         m_data[m_size++] = std::move(value);
       }
 
+      template<typename... Args>
+      constexpr void EmplaceBack(Args&&... args) {
+        VECTOR_N_ASSERT_NOT_FULL();
+        m_data[m_size++] = T{std::forward<Args>(args)...};
+      }
+
       constexpr void PopBack() {
         VECTOR_N_ASSERT_NOT_EMPTY();
         m_size--;
