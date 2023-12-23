@@ -10,6 +10,7 @@ set(HEADERS
 )
 
 set(HEADERS_PUBLIC
+  include/atom/arguments.hpp
   include/atom/bit.hpp
   include/atom/float.hpp
   include/atom/integer.hpp
