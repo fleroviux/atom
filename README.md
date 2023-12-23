@@ -18,6 +18,7 @@ atom is an attempt to maintain my core libraries in a single place and with a co
   - Panic macro with support for a custom panic handler
   - Meta-programming utilities
   - Bitwise arithmetic utilities
+  - Parse executable (command line) arguments
 
 - Atom Logger:
   - Logger with multi-sink support

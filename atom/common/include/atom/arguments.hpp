@@ -2,6 +2,7 @@
 #pragma once
 
 #include <algorithm>
+#include <atom/detail/parse_utils.hpp>
 #include <atom/panic.hpp>
 #include <filesystem>
 #include <fmt/format.h>
@@ -15,16 +16,28 @@
 
 namespace atom {
 
+  /**
+   * Command line arguments parser
+   */
   class Arguments {
     public:
+      /// Describes the version of an application in the semantic versioning (SemVer) format.
       struct Version {
         int major;
         int minor;
         int patch;
       };
 
+      /**
+       * Create a command line argument parser for an application
+       * @param app_name The name of the application
+       * @param app_description A short description of the application
+       * @param app_version The version of the application according to semantic versioning (SemVer).
+       */
       Arguments(std::string_view app_name, std::string_view app_description, Version app_version)
-          : m_app_name{app_name}, m_app_description{app_description}, m_app_version{app_version} {
+          : m_app_name{app_name}
+          , m_app_description{app_description}
+          , m_app_version{app_version} {
       }
 
       template<typename T>
@@ -141,7 +154,7 @@ namespace atom {
                 return false;
               }
 
-              std::optional<int> maybe_number = ParseInt(maybe_value.value());
+              std::optional<int> maybe_number = detail::parse_numeric_string<int>(maybe_value.value());//ParseInt(maybe_value.value());
               if(!maybe_number.has_value()) {
                 Usage(argc, argv);
                 return false;
@@ -254,48 +267,6 @@ namespace atom {
         if constexpr(std::is_same_v<T, std::string>) return Argument::Type::String;
         if constexpr(std::is_same_v<T, bool>)        return Argument::Type::Boolean;
         if constexpr(std::is_same_v<T, int>)         return Argument::Type::Integer;
-      }
-
-      [[nodiscard]] static constexpr std::optional<int> ParseInt(const std::string& numeric_string) {
-        int  old_number = 0;
-        int  number = 0;
-        bool negate = true;
-
-        if(numeric_string.empty()) {
-          return std::nullopt;
-        }
-
-        for(size_t i = 0; i < numeric_string.size(); i++) {
-          const char c = numeric_string[i];
-
-          if(i == 0) {
-            if(c == '-') {
-              negate = false;
-              continue;
-            }
-            if(c == '+') continue;
-          }
-
-          if(c < '0' || c > '9') {
-            return std::nullopt;
-          }
-
-          number = number * 10 - (c - '0');
-          if(number > old_number) {
-            return std::nullopt;
-          }
-
-          old_number = number;
-        }
-
-        if(negate) {
-          if(number == std::numeric_limits<int>::min()) {
-            return std::nullopt;
-          }
-          return -number;
-        }
-
-        return number;
       }
 
       std::string m_app_name;
