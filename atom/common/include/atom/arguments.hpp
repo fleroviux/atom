@@ -154,7 +154,7 @@ namespace atom {
                 return false;
               }
 
-              std::optional<int> maybe_number = detail::parse_numeric_string<int>(maybe_value.value());//ParseInt(maybe_value.value());
+              std::optional<int> maybe_number = detail::parse_numeric_string<int>(maybe_value.value());
               if(!maybe_number.has_value()) {
                 Usage(argc, argv);
                 return false;
@@ -255,11 +255,28 @@ namespace atom {
         std::optional<std::string> description;
         std::optional<std::string> placeholder;
         void* data;
+
+        Argument(
+          Type type,
+          bool optional,
+          std::string long_name,
+          std::optional<std::string> description,
+          std::optional<std::string> placeholder,
+          void* data
+        )   : type{type}
+            , optional{optional}
+            , long_name{std::move(long_name)}
+            , description{std::move(description)}
+            , placeholder{std::move(placeholder)}
+            , data{data} {
+        }
       };
 
       struct File {
         std::string name;
         bool optional;
+
+        File(std::string name, bool optional) : name{std::move(name)}, optional{optional} {}
       };
 
       template<typename T>
