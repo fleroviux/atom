@@ -18,6 +18,7 @@ set(HEADERS_PUBLIC
   include/atom/meta.hpp
   include/atom/panic.hpp
   include/atom/punning.hpp
+  include/atom/result.hpp
   include/atom/vector_n.hpp
 )
 
