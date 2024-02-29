@@ -16,6 +16,8 @@ set(HEADERS_PUBLIC
   include/atom/float.hpp
   include/atom/integer.hpp
   include/atom/meta.hpp
+  include/atom/non_copyable.hpp
+  include/atom/non_copyable.hpp
   include/atom/panic.hpp
   include/atom/punning.hpp
   include/atom/result.hpp
