@@ -61,6 +61,9 @@ namespace atom {
 
       Result& operator=(Result&& other_result) {
         std::swap(m_status_code, other_result.m_status_code);
+
+        // As per C++11 standard a union member can only be initialized either during
+        // initialization of the union or via placement-new. See: https://stackoverflow.com/a/33058919
         new (&m_value) T(std::move(other_result.m_value));
         return *this;
       }
