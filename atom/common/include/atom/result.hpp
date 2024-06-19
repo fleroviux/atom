@@ -16,7 +16,7 @@ namespace atom {
     if(status_code != ATOM_RESULT_SUCCESS) { \
       return status_code;\
     } \
-  } while(0);
+  } while(0)
 
   template<typename StatusCode, typename T>
     requires std::is_move_constructible_v<T>
