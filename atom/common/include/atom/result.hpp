@@ -2,6 +2,7 @@
 #pragma once
 
 #include <atom/panic.hpp>
+#include <algorithm>
 #include <memory>
 #include <type_traits>
 
@@ -19,6 +20,12 @@ namespace atom {
       Result(const T& value) requires std::copy_constructible<T> : m_status_code{(StatusCode)ATOM_RESULT_SUCCESS}, m_value{value} {}
 
       Result(T&& value) : m_status_code{(StatusCode)ATOM_RESULT_SUCCESS}, m_value{std::move(value)} {}
+
+      Result(const Result&) = delete;
+
+      Result(Result&& other_result) {
+        operator=(other_result);
+      }
 
      ~Result() { // needed if `T` has a non-trivial destructor since m_value is in a union
         if(Ok()) {
@@ -48,6 +55,14 @@ namespace atom {
         }
         m_status_code = (StatusCode)ATOM_RESULT_EMPTY;
         return std::move(m_value);
+      }
+
+      Result& operator=(const Result&) = delete;
+
+      Result& operator=(Result&& other_result) {
+        std::swap(m_status_code, other_result.m_status_code);
+        new (&m_value) T(std::move(other_result.m_value));
+        return *this;
       }
 
     private:
