@@ -11,6 +11,13 @@ namespace atom {
   #define ATOM_RESULT_EMPTY (-1)
   #define ATOM_RESULT_SUCCESS 0
 
+  #define ATOM_FORWARD_ERROR(result) do { \
+    const auto status_code = (result).Code(); \
+    if(status_code != ATOM_RESULT_SUCCESS) { \
+      return status_code;\
+    } \
+  } while(0);
+
   template<typename StatusCode, typename T>
     requires std::is_move_constructible_v<T>
   class Result {
