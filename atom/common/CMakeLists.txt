@@ -14,6 +14,7 @@ set(HEADERS_PUBLIC
   include/atom/arguments.hpp
   include/atom/bit.hpp
   include/atom/float.hpp
+  include/atom/hash.hpp
   include/atom/integer.hpp
   include/atom/literal.hpp
   include/atom/meta.hpp
