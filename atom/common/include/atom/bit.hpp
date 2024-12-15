@@ -34,38 +34,32 @@ namespace atom::bit {
   }
 
   namespace detail {
-    template<typename T>
-    constexpr auto build_pattern_mask(const char* pattern) -> T {
-      auto result = T{};
-      auto i = 0U;
-      auto bits = number_of_bits<T>();
-      while (i < bits && pattern[i] != 0) {
-        if (pattern[i] == '0' || pattern[i] == '1')
-          result |= 1ULL << (bits - i - 1);
-        i++;
+    template<typename T, ConstCharArray pattern>
+    constexpr T build_pattern_mask() {
+      T result{};
+      for(size_t i = 0; i < number_of_bits<T>(); i++) {
+        if(pattern[i] == '0' || pattern[i] == '1') {
+          result |= 1ull << (number_of_bits<T>() - i - 1u);
+        }
       }
-      result >>= bits - i;
       return result;
     }
 
-    template<typename T>
-    constexpr auto build_pattern_value(const char* pattern) -> T {
-      auto result = T{};
-      auto i = 0U;
-      auto bits = number_of_bits<T>();
-      while (i < bits && pattern[i] != 0) {
-        if (pattern[i] == '1')
-          result |= 1ULL << (bits - i - 1);
-        i++;
+    template<typename T, ConstCharArray pattern>
+    constexpr T build_pattern_value() {
+      T result{};
+      for(size_t i = 0; i < number_of_bits<T>(); i++) {
+        if(pattern[i] == '1') {
+          result |= 1ull << (number_of_bits<T>() - i - 1u);
+        }
       }
-      result >>= bits - i;
       return result;
     }
   } // namespace atom::bit::detail
 
-  template<typename T>
-  constexpr auto match_pattern(T value, const char* pattern) -> bool {
-    return (value & detail::build_pattern_mask<T>(pattern)) == detail::build_pattern_value<T>(pattern);
+  template<ConstCharArray pattern, typename T>
+  constexpr bool match_pattern(T value) {
+    return (value & detail::build_pattern_mask<T, pattern>()) == detail::build_pattern_value<T, pattern>();
   }
 
   namespace detail {
