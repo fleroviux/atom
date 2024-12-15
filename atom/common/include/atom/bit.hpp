@@ -100,6 +100,10 @@ namespace atom::bit {
 
   template<typename T, ConstCharArray pattern, typename Functor>
   constexpr auto pattern_extract(T value, Functor&& functor) {
+    // Ensure that the const char pattern array contains a null-terminated string of number_of_bits<T> length.
+    static_assert(decltype(pattern)::length == number_of_bits<T>() + 1u, "Pattern string must have number_of_bits<T> length");
+    static_assert(pattern[number_of_bits<T>()] == 0, "Pattern string must be null-terminated");
+
     return detail::pattern_extract_impl<T, pattern, Functor, 0u, 0u>(value, std::forward<Functor>(functor));
   }
 
