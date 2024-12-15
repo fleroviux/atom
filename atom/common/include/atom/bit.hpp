@@ -64,7 +64,7 @@ namespace atom::bit {
 
   namespace detail {
 
-    template<typename T, ConstCharArray pattern, typename Functor, size_t base_i, size_t current_i, typename... Args>
+    template<ConstCharArray pattern, typename T, typename Functor, size_t base_i, size_t current_i, typename... Args>
     constexpr auto pattern_extract_impl(T value, Functor&& functor, Args&&... args) {
       if constexpr(base_i == number_of_bits<T>()) {
         return functor(std::forward<Args>(args)...);
@@ -78,27 +78,27 @@ namespace atom::bit {
             // Extract the bit field, append it to the parameter pack, then continue with the next range.
             constexpr size_t lsb = number_of_bits<T>() - current_i - 1u;
             constexpr size_t count = current_i - base_i + 1u;
-            return pattern_extract_impl<T, pattern, Functor, current_i + 1u, current_i + 1u, Args..., T>(value, std::forward<Functor>(functor), std::forward<Args>(args)..., get_field(value, lsb, count));
+            return pattern_extract_impl<pattern, T, Functor, current_i + 1u, current_i + 1u, Args..., T>(value, std::forward<Functor>(functor), std::forward<Args>(args)..., get_field(value, lsb, count));
           } else {
             // The current range contains a sequence of zeroes or ones, so we just ignore it and continue with the next range.
-            return pattern_extract_impl<T, pattern, Functor, current_i + 1u, current_i + 1u, Args...>(value, std::forward<Functor>(functor), std::forward<Args>(args)...);
+            return pattern_extract_impl<pattern, T, Functor, current_i + 1u, current_i + 1u, Args...>(value, std::forward<Functor>(functor), std::forward<Args>(args)...);
           }
         } else {
           // Next pattern character is same as current so just extent the range to the next character.
-          return pattern_extract_impl<T, pattern, Functor, base_i, current_i + 1u, Args...>(value, std::forward<Functor>(functor), std::forward<Args>(args)...);
+          return pattern_extract_impl<pattern, T, Functor, base_i, current_i + 1u, Args...>(value, std::forward<Functor>(functor), std::forward<Args>(args)...);
         }
       }
     }
 
   } // namespace atom::bit::detail
 
-  template<typename T, ConstCharArray pattern, typename Functor>
+  template<ConstCharArray pattern, typename T, typename Functor>
   constexpr auto pattern_extract(T value, Functor&& functor) {
     // Ensure that the const char pattern array contains a null-terminated string of number_of_bits<T> length.
     static_assert(decltype(pattern)::length == number_of_bits<T>() + 1u, "Pattern string must have number_of_bits<T> length");
     static_assert(pattern[number_of_bits<T>()] == 0, "Pattern string must be null-terminated");
 
-    return detail::pattern_extract_impl<T, pattern, Functor, 0u, 0u>(value, std::forward<Functor>(functor));
+    return detail::pattern_extract_impl<pattern, T, Functor, 0u, 0u>(value, std::forward<Functor>(functor));
   }
 
   template<typename T>
