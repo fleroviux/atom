@@ -35,6 +35,13 @@ namespace atom::bit {
 
   namespace detail {
     template<typename T, ConstCharArray pattern>
+    constexpr void validate_pattern() {
+      // Ensure that the const char pattern array contains a null-terminated string of number_of_bits<T> length.
+      static_assert(decltype(pattern)::length == number_of_bits<T>() + 1u, "Pattern string must have number_of_bits<T> length");
+      static_assert(pattern[number_of_bits<T>()] == 0, "Pattern string must be null-terminated");
+    }
+
+    template<typename T, ConstCharArray pattern>
     constexpr T build_pattern_mask() {
       T result{};
       for(size_t i = 0; i < number_of_bits<T>(); i++) {
@@ -59,6 +66,7 @@ namespace atom::bit {
 
   template<ConstCharArray pattern, typename T>
   constexpr bool match_pattern(T value) {
+    detail::validate_pattern<T, pattern>();
     return (value & detail::build_pattern_mask<T, pattern>()) == detail::build_pattern_value<T, pattern>();
   }
 
@@ -94,10 +102,7 @@ namespace atom::bit {
 
   template<ConstCharArray pattern, typename T, typename Functor>
   constexpr auto pattern_extract(T value, Functor&& functor) {
-    // Ensure that the const char pattern array contains a null-terminated string of number_of_bits<T> length.
-    static_assert(decltype(pattern)::length == number_of_bits<T>() + 1u, "Pattern string must have number_of_bits<T> length");
-    static_assert(pattern[number_of_bits<T>()] == 0, "Pattern string must be null-terminated");
-
+    detail::validate_pattern<T, pattern>();
     return detail::pattern_extract_impl<pattern, T, Functor, 0u, 0u>(value, std::forward<Functor>(functor));
   }
 
