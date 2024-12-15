@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <atom/const_char_array.hpp>
 #include <atom/integer.hpp>
 #include <concepts>
 #include <memory>
@@ -65,6 +66,41 @@ namespace atom::bit {
   template<typename T>
   constexpr auto match_pattern(T value, const char* pattern) -> bool {
     return (value & detail::build_pattern_mask<T>(pattern)) == detail::build_pattern_value<T>(pattern);
+  }
+
+  namespace detail {
+
+    template<typename T, ConstCharArray pattern, typename Functor, size_t base_i, size_t current_i, typename... Args>
+    constexpr auto pattern_extract_impl(T value, Functor&& functor, Args&&... args) {
+      if constexpr(base_i == number_of_bits<T>()) {
+        return functor(std::forward<Args>(args)...);
+      } else {
+        constexpr char current_char = pattern[base_i];
+
+        if constexpr(current_i == number_of_bits<T>() - 1u || pattern[current_i + 1u] != current_char) {
+          // The current range ends here, either because the next character is different or because we hit the end of the pattern.
+          if constexpr(current_char != '0' && current_char != '1' && current_char != '?') {
+            // The character in this range isn't 0 or 1. This indicates that this is a bit field we're interested in.
+            // Extract the bit field, append it to the parameter pack, then continue with the next range.
+            constexpr size_t lsb = number_of_bits<T>() - current_i - 1u;
+            constexpr size_t count = current_i - base_i + 1u;
+            return pattern_extract_impl<T, pattern, Functor, current_i + 1u, current_i + 1u, Args..., T>(value, std::forward<Functor>(functor), std::forward<Args>(args)..., get_field(value, lsb, count));
+          } else {
+            // The current range contains a sequence of zeroes or ones, so we just ignore it and continue with the next range.
+            return pattern_extract_impl<T, pattern, Functor, current_i + 1u, current_i + 1u, Args...>(value, std::forward<Functor>(functor), std::forward<Args>(args)...);
+          }
+        } else {
+          // Next pattern character is same as current so just extent the range to the next character.
+          return pattern_extract_impl<T, pattern, Functor, base_i, current_i + 1u, Args...>(value, std::forward<Functor>(functor), std::forward<Args>(args)...);
+        }
+      }
+    }
+
+  } // namespace atom::bit::detail
+
+  template<typename T, ConstCharArray pattern, typename Functor>
+  constexpr auto pattern_extract(T value, Functor&& functor) {
+    return detail::pattern_extract_impl<T, pattern, Functor, 0u, 0u>(value, std::forward<Functor>(functor));
   }
 
   template<typename T>
