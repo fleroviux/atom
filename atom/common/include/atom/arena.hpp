@@ -28,7 +28,7 @@ class Arena {
 #endif
 
       if(m_base_address == nullptr) {
-        ATOM_PANIC("nyaarm: out of memory");
+        ATOM_PANIC("atom: out of memory");
       }
       m_maximum_address = m_base_address + capacity;
       Reset();
