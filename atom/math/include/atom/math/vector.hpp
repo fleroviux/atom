@@ -278,7 +278,7 @@ namespace atom {
          * @param other the other vector
          * @returm the result vector
          */
-        [[nodiscard]] auto Cross(Vector3 const& other) const -> Vector3 {
+        [[nodiscard]] auto Cross(Vector3 const& other) const -> Derived {
           return {
             this->data[1] * other[2] - this->data[2] * other[1],
             this->data[2] * other[0] - this->data[0] * other[2],
