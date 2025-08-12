@@ -11,10 +11,14 @@ set(HEADERS
 
 set(HEADERS_PUBLIC
   include/atom/detail/parse_utils.hpp
+  include/atom/arena.hpp
   include/atom/arguments.hpp
   include/atom/bit.hpp
+  include/atom/const_char_array.hpp
   include/atom/float.hpp
+  include/atom/hash.hpp
   include/atom/integer.hpp
+  include/atom/literal.hpp
   include/atom/meta.hpp
   include/atom/non_copyable.hpp
   include/atom/non_copyable.hpp
