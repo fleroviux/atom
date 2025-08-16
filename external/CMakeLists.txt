@@ -1,4 +1,4 @@
 
-if(NOT ATOM_USE_EXTERNAL_FMT)
+if(NOT TARGET fmt)
   add_subdirectory(fmt)
 endif()
