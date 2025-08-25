@@ -2,14 +2,14 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_license//rules:license.bzl", "license")
 
 # License
-package(default_applicable_licenses = [":license"])
-exports_files(["LICENSE"])
-license(name = "license", license_kinds = ["@rules_license//licenses/spdx:0BSD"], license_text = "LICENSE")
+package(default_applicable_licenses = [ ":license" ])
+exports_files([ "LICENSE" ])
+license(name = "license", license_kinds = [ "@rules_license//licenses/spdx:0BSD" ], license_text = "LICENSE")
 
 # Common
 cc_library(
   name = "atom-common",
-  srcs = ["common/src/panic.cc"],
+  srcs = [ "common/src/panic.cc" ],
   hdrs = [
     "common/include/atom/arena.hh",
     "common/include/atom/arguments.hh",
@@ -28,8 +28,9 @@ cc_library(
     "common/include/atom/result.hh",
     "common/include/atom/vector_n.hh",
   ],
-  includes = ["common/include"],
-  deps = ["@fmt"],
+  includes = [ "common/include" ],
+  deps = [ "@fmt" ],
+  visibility = [ "//visibility:public" ]
 )
 
 # Logger
@@ -45,8 +46,9 @@ cc_library(
     "logger/include/atom/logger/sink/console.hh",
     "logger/include/atom/logger/sink/file.hh",
   ],
-  includes = ["logger/include"],
-  deps = [":atom-common"],
+  includes = [ "logger/include" ],
+  deps = [ ":atom-common" ],
+  visibility = [ "//visibility:public" ]
 )
 
 # Mathematics
@@ -61,8 +63,9 @@ cc_library(
     "math/include/atom/math/traits.hh",
     "math/include/atom/math/vector.hh",
   ],
-  includes = ["math/include"],
-  deps = [":atom-common"],
+  includes = [ "math/include" ],
+  deps = [ ":atom-common" ],
+  visibility = [ "//visibility:public" ]
 )
 
 # Monolith
@@ -73,4 +76,5 @@ cc_library(
     ":atom-logger",
     ":atom-math",
   ],
+  visibility = [ "//visibility:public" ]
 )
