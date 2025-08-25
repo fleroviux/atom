@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <atom/logger/logger.hpp>
+#include <atom/logger/logger.hh>
 
 namespace atom {
 

@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <atom/math/vector.hpp>
+#include <atom/math/vector.hh>
 
 namespace atom {
 

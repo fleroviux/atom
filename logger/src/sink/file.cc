@@ -1,6 +1,6 @@
 
-#include <atom/logger/sink/file.hpp>
-#include <atom/panic.hpp>
+#include <atom/logger/sink/file.hh>
+#include <atom/panic.hh>
 
 namespace atom {
 

@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <atom/integer.hpp>
+#include <atom/integer.hh>
 #include <algorithm>
 
 namespace atom {

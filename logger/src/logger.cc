@@ -1,5 +1,5 @@
 
-#include <atom/logger/logger.hpp>
+#include <atom/logger/logger.hh>
 #include <unordered_map>
 
 namespace atom {

@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include <atom/integer.hpp>
-#include <atom/math/traits.hpp>
+#include <atom/integer.hh>
+#include <atom/math/traits.hh>
 #include <cmath>
 
 namespace atom {

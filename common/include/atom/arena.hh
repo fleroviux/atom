@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include <atom/integer.hpp>
-#include <atom/panic.hpp>
+#include <atom/integer.hh>
+#include <atom/panic.hh>
 #include <cstdlib>
 
 #if defined(WIN32)

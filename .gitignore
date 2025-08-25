@@ -1,2 +1,7 @@
+# Bazel data
 /bazel-*
 MODULE.bazel.lock
+
+# IDE data
+.idea
+.clwb

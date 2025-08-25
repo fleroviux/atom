@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include <atom/math/box3.hpp>
-#include <atom/math/plane.hpp>
+#include <atom/math/box3.hh>
+#include <atom/math/plane.hh>
 
 namespace atom {
 

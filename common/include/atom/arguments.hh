@@ -2,8 +2,8 @@
 #pragma once
 
 #include <algorithm>
-#include <atom/detail/parse_utils.hpp>
-#include <atom/panic.hpp>
+#include <atom/detail/parse_utils.hh>
+#include <atom/panic.hh>
 #include <filesystem>
 #include <fmt/format.h>
 #include <optional>

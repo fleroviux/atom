@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include <atom/const_char_array.hpp>
-#include <atom/integer.hpp>
+#include <atom/const_char_array.hh>
+#include <atom/integer.hh>
 #include <concepts>
 #include <memory>
 #include <type_traits>

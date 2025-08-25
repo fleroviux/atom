@@ -1,61 +1,82 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_license//rules:license.bzl", "license")
 
-cc_library(
-  name = "atom-common",
-  srcs = [ "common/src/panic.cpp" ],
-  hdrs = [
-    "common/include/atom/detail/parse_utils.hpp",
-    "common/include/atom/arena.hpp",
-    "common/include/atom/arguments.hpp",
-    "common/include/atom/bit.hpp",
-    "common/include/atom/const_char_array.hpp",
-    "common/include/atom/float.hpp",
-    "common/include/atom/hash.hpp",
-    "common/include/atom/integer.hpp",
-    "common/include/atom/literal.hpp",
-    "common/include/atom/meta.hpp",
-    "common/include/atom/non_copyable.hpp",
-    "common/include/atom/panic.hpp",
-    "common/include/atom/punning.hpp",
-    "common/include/atom/result.hpp",
-    "common/include/atom/vector_n.hpp"
-  ],
-  includes = [ "common/include" ],
-  deps = [ "@fmt//:fmt" ]
+# License
+package(default_applicable_licenses = [":license"])
+
+exports_files(["LICENSE"])
+
+license(
+    name = "license",
+    license_kinds = ["@rules_license//licenses/spdx:0BSD"],
+    license_text = "LICENSE",
 )
 
+# Common
 cc_library(
-  name = "atom-logger",
-  srcs = [
-    "logger/src/sink/console.cpp",
-    "logger/src/sink/file.cpp",
-    "logger/src/logger.cpp"
-  ],
-  hdrs = [
-    "logger/include/atom/logger/sink/console.hpp",
-    "logger/include/atom/logger/sink/file.hpp",
-    "logger/include/atom/logger/logger.hpp"
-  ],
-  includes = [ "logger/include" ],
-  deps = [ ":atom-common" ]
+    name = "atom-common",
+    srcs = ["common/src/panic.cc"],
+    hdrs = [
+        "common/include/atom/arena.hh",
+        "common/include/atom/arguments.hh",
+        "common/include/atom/bit.hh",
+        "common/include/atom/const_char_array.hh",
+        "common/include/atom/detail/parse_utils.hh",
+        "common/include/atom/float.hh",
+        "common/include/atom/hash.hh",
+        "common/include/atom/integer.hh",
+        "common/include/atom/literal.hh",
+        "common/include/atom/meta.hh",
+        "common/include/atom/non_copyable.hh",
+        "common/include/atom/non_moveable.hh",
+        "common/include/atom/panic.hh",
+        "common/include/atom/punning.hh",
+        "common/include/atom/result.hh",
+        "common/include/atom/vector_n.hh",
+    ],
+    includes = ["common/include"],
+    deps = ["@fmt"],
 )
 
+# Logger
 cc_library(
-  name = "atom-math",
-  hdrs = [
-    "math/include/atom/math/box3.hpp",
-    "math/include/atom/math/frustum.hpp",
-    "math/include/atom/math/matrix4.hpp",
-    "math/include/atom/math/plane.hpp",
-    "math/include/atom/math/quaternion.hpp",
-    "math/include/atom/math/traits.hpp",
-    "math/include/atom/math/vector.hpp"
-  ],
-  includes = [ "math/include" ],
-  deps = [ ":atom-common" ]
+    name = "atom-logger",
+    srcs = [
+        "logger/src/logger.cc",
+        "logger/src/sink/console.cc",
+        "logger/src/sink/file.cc",
+    ],
+    hdrs = [
+        "logger/include/atom/logger/logger.hh",
+        "logger/include/atom/logger/sink/console.hh",
+        "logger/include/atom/logger/sink/file.hh",
+    ],
+    includes = ["logger/include"],
+    deps = [":atom-common"],
 )
 
+# Mathematics
 cc_library(
-  name = "atom",
-  deps = [ ":atom-common", ":atom-logger", ":atom-math" ]
+    name = "atom-math",
+    hdrs = [
+        "math/include/atom/math/box3.hh",
+        "math/include/atom/math/frustum.hh",
+        "math/include/atom/math/matrix4.hh",
+        "math/include/atom/math/plane.hh",
+        "math/include/atom/math/quaternion.hh",
+        "math/include/atom/math/traits.hh",
+        "math/include/atom/math/vector.hh",
+    ],
+    includes = ["math/include"],
+    deps = [":atom-common"],
+)
+
+# Monolith
+cc_library(
+    name = "atom",
+    deps = [
+        ":atom-common",
+        ":atom-logger",
+        ":atom-math",
+    ],
 )

@@ -2,7 +2,7 @@
 #pragma once
 
 #include <algorithm>
-#include <atom/math/matrix4.hpp>
+#include <atom/math/matrix4.hh>
 #include <limits>
 
 namespace atom {

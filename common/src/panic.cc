@@ -1,5 +1,5 @@
 
-#include <atom/panic.hpp>
+#include <atom/panic.hh>
 #include <cstdlib>
 #include <fmt/color.h>
 

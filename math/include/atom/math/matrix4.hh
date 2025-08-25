@@ -3,7 +3,7 @@
 
 #include <array>
 #include <cmath>
-#include <atom/math/vector.hpp>
+#include <atom/math/vector.hh>
 
 #ifndef M_PI
   #define M_PI 3.14159265358979323

@@ -1,5 +1,5 @@
 
-#include <atom/logger/sink/console.hpp>
+#include <atom/logger/sink/console.hh>
 #include <fmt/color.h>
 
 namespace atom {

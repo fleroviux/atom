@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <atom/panic.hpp>
+#include <atom/panic.hh>
 #include <algorithm>
 #include <memory>
 #include <type_traits>

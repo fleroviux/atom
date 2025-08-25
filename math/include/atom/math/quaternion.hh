@@ -2,8 +2,8 @@
 #pragma once
 
 #include <algorithm>
-#include <atom/math/traits.hpp>
-#include <atom/math/matrix4.hpp>
+#include <atom/math/traits.hh>
+#include <atom/math/matrix4.hh>
 #include <cmath>
 #include <initializer_list>
 

@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <atom/panic.hpp>
+#include <atom/panic.hh>
 #include <cstddef>
 #include <span>
 #include <type_traits>
